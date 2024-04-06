@@ -6,10 +6,13 @@
 
 struct book initialize() {
     struct book input;
+    getchar();
     printf("Введіть назву книги \n");
     fgets(input.title, MAXL, stdin);
+    input.title[strlen(input.title)-1] = '\0';
     printf(" Введіть ПІБ автора \n");
     fgets(input.author, MAXL, stdin);
+    input.author[strlen(input.author)-1] = '\0';
     printf("Введіть кількість сторінок.\n");
     scanf("%d", &input.pages);
     printf("Введіть ціну.\n");
@@ -22,6 +25,7 @@ struct array input(){
     puts("Input amount of books: ");
     scanf("%d", &input.size);
     for (int i = 0; i < input.size; ++i) {
+        printf("Книга №%d: \n", i+1);
         input.catalog[i] = initialize();
     }
     return input;
