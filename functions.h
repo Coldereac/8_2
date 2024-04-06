@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MAXL 41
 #define N 10
@@ -19,14 +20,25 @@ struct book // шаблон структури з дескриптором book
     float price;
 };
 
+struct array{
+    int size;
+    struct book catalog[N];
+};
+
 struct book initialize();
+
+struct array input();
 
 void print(struct book output);
 
-struct book findByAuthor(struct book catalog[], char *author, int size);
+void printArray(struct array output);
 
-struct book findByPrice(struct book catalog[], float price, int size);
+struct array findByAuthor(char *author, struct array catalog);
 
-struct book findBiggestBook(struct book catalog[], char *author, int size);
+struct array findByPrice(float min_price, float max_price, struct array catalog);
+
+struct book findBiggestBook(char *author, struct array catalog);
+
+char *allocateLine();
 
 #endif //INC_8_2_FUNCTIONS_H

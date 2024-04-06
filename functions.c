@@ -17,40 +17,60 @@ struct book initialize() {
     return input;
 }
 
+struct array input(){
+    struct array input;
+    puts("Input amount of books: ");
+    scanf("%d", &input.size);
+    for (int i = 0; i < input.size; ++i) {
+        input.catalog[i] = initialize();
+    }
+    return input;
+}
+
 void print(struct book output) {
     printf("%s %s сторінок: %d коштує %.2f грн.\n", output.title, output.author, output.pages, output.price);
 }
 
-struct book findByAuthor(struct book catalog[], char *author, int size) {
-    int found = 0;
-    int i;
-    for (i = 0; i < size && !found; ++i) {
-        if (strcmp(catalog[i].author, author) == 0) {
-            found = 1;
-        }
+void printArray(struct array output) {
+    for (int i = 0; i < output.size; ++i) {
+        print(output.catalog[i]);
     }
-    return catalog[i];
 }
 
-struct book findByPrice(struct book catalog[], float price, int size) {
-    int found = 0;
-    int i;
-    for (i = 0; i < size && !found; ++i) {
-        if (catalog[i].price == price) {
-            found = 1;
+struct array findByAuthor(char *author, struct array catalog) {
+    struct array founded;
+    founded.size = 0;
+    for (int i = 0; i < catalog.size; ++i) {
+        if (strcmp(catalog.catalog[i].author, author) == 0) {
+            founded.catalog[founded.size++] = catalog.catalog[i];
         }
     }
-    return catalog[i];
+    return founded;
 }
 
-struct book findBiggestBook(struct book catalog[], char *author, int size) {
-    int biggestBookNumber = 0;
-    for (int i = 0; i < size; ++i) {
-        if (strcmp(catalog[i].author, author) == 0) {
-            if (catalog[biggestBookNumber].pages < catalog[i].pages){
-                biggestBookNumber = i;
+struct array findByPrice(float min_price, float max_price, struct array catalog) {
+    struct array founded;
+    founded.size = 0;
+    for (int i = 0; i < catalog.size; ++i) {
+        if (catalog.catalog[i].price < max_price && catalog.catalog[i].price > min_price) {
+            founded.catalog[founded.size++] = catalog.catalog[i];
+        }
+    }
+    return founded;
+}
+
+struct book findBiggestBook(char *author, struct array catalog) {
+    int biggest = 0;
+    for (int i = 0; i < catalog.size; ++i) {
+        if(strcmp(catalog.catalog[i].author, author) == 0){
+            if (catalog.catalog[i].pages > catalog.catalog[biggest].pages){
+                biggest = i;
             }
         }
     }
-    return catalog[biggestBookNumber];
+    return catalog.catalog[biggest];
+}
+
+char *allocateLine() {
+    return (char *) malloc(MAXL * sizeof(char));
 }
