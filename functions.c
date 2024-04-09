@@ -71,7 +71,7 @@ array findByPrice(float min_price, float max_price, array catalog) {
     founded.catalog = (book *) realloc(founded.catalog, founded.size * sizeof(book));
     return founded;
 }
-
+//
 book findBiggestBook(char *author, array catalog) {
     int biggest = 0;
     array byAuthor = findByAuthor(author, catalog);
